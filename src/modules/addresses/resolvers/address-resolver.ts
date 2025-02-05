@@ -1,9 +1,10 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 
 import { AddressesService } from '../services/addresses.service';
-import { Address } from '../entities/adress.entity';
-import { CreateAddressDTO } from './dto/create-address.dto';
-import { UpdateAddressDTO } from './dto/update-address.dto';
+
+import { Address } from '../graphql/models/adress.model';
+import { UpdateAddressInput } from '../graphql/inputs/update-address.input';
+import { CreateAddressInput } from '../graphql/inputs/create-address.input';
 
 @Resolver(() => Address)
 export class AddressesResolver {
@@ -20,12 +21,12 @@ export class AddressesResolver {
   }
 
   @Mutation(() => Address)
-  createAddress(@Args('input') input: CreateAddressDTO) {
+  createAddress(@Args('input') input: CreateAddressInput) {
     return this.addressesService.create(input);
   }
 
   @Mutation(() => Address)
-  updateAddress(@Args('input') input: UpdateAddressDTO) {
+  updateAddress(@Args('input') input: UpdateAddressInput) {
     return this.addressesService.update(input.id, input);
   }
 

@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Address } from 'src/modules/addresses/entities/adress.entity';
+import { Purchase } from 'src/modules/purchases/entities/purchase.entity';
 // import { Purchase } from '../purchases/purchase.entity';
 
 @ObjectType()
@@ -29,9 +30,9 @@ export class User {
   @OneToMany(() => Address, (address) => address.user)
   addresses: Address[];
 
-  //   @Field(() => [Purchase], { nullable: true })
-  //   @OneToMany(() => Purchase, (purchase) => purchase.user)
-  //   purchases: Purchase[];
+  @Field(() => [Purchase], { nullable: true })
+  @OneToMany(() => Purchase, (purchase) => purchase.user)
+  purchases: Purchase[];
 
   @Field()
   @CreateDateColumn({ type: 'timestamp' })

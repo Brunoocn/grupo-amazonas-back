@@ -7,9 +7,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Address } from '../entities/adress.entity';
-import { CreateAddressDTO } from '../resolvers/dto/create-address.dto';
-import { UpdateAddressDTO } from '../resolvers/dto/update-address.dto';
 import { User } from 'src/modules/users/entities/user.entity';
+import { CreateAddressInput } from '../graphql/inputs/create-address.input';
+import { UpdateAddressInput } from '../graphql/inputs/update-address.input';
 
 @Injectable()
 export class AddressesService {
@@ -32,7 +32,7 @@ export class AddressesService {
     });
   }
 
-  async create(input: CreateAddressDTO): Promise<Address> {
+  async create(input: CreateAddressInput): Promise<Address> {
     const user = await this.userRepository.findOne({
       where: { id: input.userId },
       relations: ['addresses'],
@@ -52,7 +52,7 @@ export class AddressesService {
     return this.addressRepository.save(address);
   }
 
-  async update(id: number, input: UpdateAddressDTO): Promise<Address> {
+  async update(id: number, input: UpdateAddressInput): Promise<Address> {
     const address = await this.addressRepository.findOne({
       where: { id },
       relations: ['user'],

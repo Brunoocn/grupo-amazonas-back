@@ -1,7 +1,7 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 
 @InputType()
-export class CreateAddressDTO {
+export class CreateAddressInput {
   @Field()
   cep: string;
 
