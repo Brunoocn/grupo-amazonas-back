@@ -6,6 +6,8 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { User } from './modules/users/entities/user.entity';
+import { AdressesModule } from './modules/addresses/adresses.module';
+import { Address } from './modules/addresses/entities/adress.entity';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { User } from './modules/users/entities/user.entity';
       sortSchema: true,
     }),
     UsersModule,
+    AdressesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -22,7 +25,7 @@ import { User } from './modules/users/entities/user.entity';
       username: 'postgres',
       password: 'postgres',
       database: 'postgres',
-      entities: [User],
+      entities: [User, Address],
       synchronize: true,
     }),
   ],

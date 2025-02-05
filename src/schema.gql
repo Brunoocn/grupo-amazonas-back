@@ -2,23 +2,61 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Address {
+  cep: String!
+  city: String!
+  createdAt: DateTime!
+  id: ID!
+  state: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+input CreateAddressDTO {
+  cep: String!
+  city: String!
+  state: String!
+  userId: Int!
+}
+
 input CreateUserDTO {
   email: String!
   name: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Mutation {
+  createAddress(input: CreateAddressDTO!): Address!
   createUser(createUserInput: CreateUserDTO!): User!
+  deleteAddress(id: Float!): Boolean!
   deleteUser(id: Int!): Boolean!
+  updateAddress(input: UpdateAddressDTO!): Address!
 }
 
 type Query {
+  address(id: Int!): Address!
+  addresses: [Address!]!
   getUser(id: Int!): User
   getUsers: [User!]!
 }
 
+input UpdateAddressDTO {
+  cep: String
+  city: String
+  id: Int!
+  state: String
+  userId: Int
+}
+
 type User {
+  addresses: [Address!]
+  createdAt: DateTime!
   email: String!
   id: ID!
   name: String!
+  updatedAt: DateTime!
 }
