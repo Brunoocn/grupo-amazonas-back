@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Purchase } from '../entities/purchase.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from 'src/modules/auth/entities/user.entity';
 
 import { CreatePurchaseInput } from '../graphql/inputs/create-purchase.input';
 import { UpdatePurchaseInput } from '../graphql/inputs/update-purchase.input';

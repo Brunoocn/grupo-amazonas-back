@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from 'src/modules/auth/graphql/models/user.model';
 
 @ObjectType()
 export class Purchase {
@@ -12,7 +12,7 @@ export class Purchase {
   @Field()
   purchaseDate: Date;
 
-  @Field()
+  @Field(() => User)
   user: User;
 
   @Field()
