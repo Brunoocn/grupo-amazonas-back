@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from 'src/modules/auth/graphql/models/user.model';
 
 @ObjectType()
 export class Address {
@@ -14,6 +14,9 @@ export class Address {
 
   @Field()
   state: string;
+
+  @Field()
+  number: string;
 
   @Field(() => User)
   user: User;

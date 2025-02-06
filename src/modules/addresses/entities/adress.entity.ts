@@ -1,4 +1,4 @@
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from 'src/modules/auth/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,14 +13,17 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 10 }) // Explicitly defining type
   cep: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   city: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   state: string;
+
+  @Column({ type: 'varchar', length: 20 })
+  number: string;
 
   @ManyToOne(() => User, (user) => user.addresses)
   user: User;

@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Address } from '../entities/adress.entity';
-import { User } from 'src/modules/users/entities/user.entity';
+import { User } from 'src/modules/auth/entities/user.entity';
 import { CreateAddressInput } from '../graphql/inputs/create-address.input';
 import { UpdateAddressInput } from '../graphql/inputs/update-address.input';
 
@@ -42,7 +42,7 @@ export class AddressesService {
       throw new NotFoundException(`User with ID ${input.userId} not found`);
     }
 
-    if (this.verifyAddressExists(user.addresses, input.cep)) {
+    if (this.verifyAddressExists(user.addresses, input.cep, input.number)) {
       throw new BadRequestException(
         `User already has an address registered with CEP: ${input.cep}`,
       );
@@ -73,7 +73,7 @@ export class AddressesService {
       }
 
       if (
-        this.verifyAddressExists(user.addresses, input.cep) &&
+        this.verifyAddressExists(user.addresses, input.cep, input.number) &&
         address.cep !== input.cep
       ) {
         throw new BadRequestException(
@@ -100,7 +100,10 @@ export class AddressesService {
   private verifyAddressExists(
     userAddresses: Array<Address>,
     inputCep: string,
+    inputNumber: string,
   ): boolean {
-    return userAddresses.some((address) => address.cep === inputCep);
+    return userAddresses.some(
+      (address) => address.cep === inputCep && address.number === inputNumber,
+    );
   }
 }

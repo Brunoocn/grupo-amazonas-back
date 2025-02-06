@@ -11,6 +11,9 @@ export class CreateAddressInput {
   @Field()
   state: string;
 
+  @Field()
+  number: string;
+
   @Field(() => Int)
   userId: number;
 }

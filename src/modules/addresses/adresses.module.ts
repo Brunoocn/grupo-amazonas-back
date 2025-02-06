@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Address } from './entities/adress.entity';
 import { AddressesResolver } from './resolvers/address-resolver';
 import { AddressesService } from './services/addresses.service';
-import { User } from '../users/entities/user.entity';
+import { User } from '../auth/entities/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Address, User])],
