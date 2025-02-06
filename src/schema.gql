@@ -7,21 +7,29 @@ type Address {
   city: String!
   createdAt: DateTime!
   id: ID!
+  number: String!
   state: String!
   updatedAt: DateTime!
   user: User!
 }
 
-input CreateAddressDTO {
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+input CreateAddressInput {
   cep: String!
   city: String!
+  number: String!
   state: String!
   userId: Int!
 }
 
-input CreateUserDTO {
-  email: String!
-  name: String!
+input CreatePurchaseInput {
+  purchaseDate: String!
+  totalAmount: Float!
+  userId: Int!
 }
 
 """
@@ -29,26 +37,62 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type DeletePurchase {
+  message: String!
+  sucess: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
-  createAddress(input: CreateAddressDTO!): Address!
-  createUser(createUserInput: CreateUserDTO!): User!
+  createAddress(input: CreateAddressInput!): Address!
+  createPurchase(input: CreatePurchaseInput!): Purchase!
   deleteAddress(id: Float!): Boolean!
-  deleteUser(id: Int!): Boolean!
-  updateAddress(input: UpdateAddressDTO!): Address!
+  deletePurchase(id: Float!): DeletePurchase!
+  login(input: LoginInput!): AuthResponse!
+  register(input: RegisterInput!): User!
+  updateAddress(input: UpdateAddressInput!): Address!
+  updatePurchase(input: UpdatePurchaseInput!): Purchase!
+}
+
+type Purchase {
+  createdAt: DateTime!
+  id: ID!
+  purchaseDate: DateTime!
+  totalAmount: Float!
+  updatedAt: DateTime!
+  user: User!
 }
 
 type Query {
   address(id: Int!): Address!
   addresses: [Address!]!
-  getUser(id: Int!): User
-  getUsers: [User!]!
+  purchase(id: Float!): Purchase!
+  purchases: [Purchase!]!
 }
 
-input UpdateAddressDTO {
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input UpdateAddressInput {
   cep: String
   city: String
   id: Int!
+  number: String
   state: String
+  userId: Int
+}
+
+input UpdatePurchaseInput {
+  id: Int!
+  purchaseDate: String
+  totalAmount: Float
   userId: Int
 }
 
@@ -58,5 +102,6 @@ type User {
   email: String!
   id: ID!
   name: String!
+  purchases: [Purchase!]
   updatedAt: DateTime!
 }
