@@ -39,7 +39,7 @@ describe('AuthService', () => {
       };
 
       const user = await authService.register(registerInput);
-      console.log(user, 'user ');
+
       expect(user).toHaveProperty('name');
       expect(user.email).toBe(registerInput.email);
     });
