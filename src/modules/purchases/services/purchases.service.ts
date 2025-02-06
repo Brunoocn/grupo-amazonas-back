@@ -3,8 +3,9 @@ import { Purchase } from '../entities/purchase.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from 'src/modules/users/entities/user.entity';
-import { CreatePurchaseDTO } from '../resolvers/dto/create-purchase.dto';
-import { UpdatePurchaseDTO } from '../resolvers/dto/update-purchase.dto';
+
+import { CreatePurchaseInput } from '../graphql/inputs/create-purchase.input';
+import { UpdatePurchaseInput } from '../graphql/inputs/update-purchase.input';
 
 @Injectable()
 export class PurchasesService {
@@ -21,17 +22,13 @@ export class PurchasesService {
   }
 
   async findOne(id: number): Promise<Purchase> {
-    return await this.purchaseRepository
-      .findOneOrFail({
-        where: { id },
-        relations: ['user'],
-      })
-      .catch(() => {
-        throw new NotFoundException(`Purchase with ID ${id} not found`);
-      });
+    return await this.purchaseRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
   }
 
-  async create(input: CreatePurchaseDTO): Promise<Purchase> {
+  async create(input: CreatePurchaseInput): Promise<Purchase> {
     const user = await this.userRepository.findOne({
       where: { id: input.userId },
     });
@@ -44,7 +41,7 @@ export class PurchasesService {
     return this.purchaseRepository.save(purchase);
   }
 
-  async update(id: number, input: UpdatePurchaseDTO): Promise<Purchase> {
+  async update(id: number, input: UpdatePurchaseInput): Promise<Purchase> {
     const purchase = await this.purchaseRepository.findOne({ where: { id } });
 
     if (!purchase) {
@@ -53,5 +50,19 @@ export class PurchasesService {
 
     Object.assign(purchase, input);
     return this.purchaseRepository.save(purchase);
+  }
+
+  async delete(id: number): Promise<{ success: boolean; message: string }> {
+    const purchase = await this.purchaseRepository.findOne({ where: { id } });
+
+    if (!purchase) {
+      throw new NotFoundException(`Purchase with ID ${id} not found`);
+    }
+
+    await this.purchaseRepository.delete({ id });
+    return {
+      success: true,
+      message: `Purchase with ID ${id} has been deleted`,
+    };
   }
 }
