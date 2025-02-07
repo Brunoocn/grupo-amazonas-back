@@ -23,4 +23,4 @@ $ docker-compose up --build
 
 O server irá subir na porta http://localhost:3000.
 
-Vale lembrar que você deve configurar .env como o .env.exemple
+Vale lembrar que você deve configurar .env como o .env.sample
