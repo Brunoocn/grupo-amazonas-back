@@ -1,5 +1,5 @@
 import { User } from 'src/modules/auth/domain/entities/user.entity';
-import { Purchase } from 'src/modules/purchases/infra/entities/purchase.entity';
+import { Purchase } from 'src/modules/purchases/domain/entities/purchase.entity';
 
 export class InMemoryPurchaseRepository {
   private purchases: Purchase[] = [];
