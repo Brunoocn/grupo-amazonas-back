@@ -1,4 +1,4 @@
-import { User } from 'src/modules/auth/entities/user.entity';
+import { User } from 'src/modules/auth/infra/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,7 +13,7 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 10 }) // Explicitly defining type
+  @Column({ type: 'varchar', length: 10 })
   cep: string;
 
   @Column({ type: 'varchar', length: 100 })

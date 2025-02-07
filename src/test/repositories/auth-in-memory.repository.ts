@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { User } from 'src/modules/auth/entities/user.entity';
+import { User } from 'src/modules/auth/infra/entities/user.entity';
 
 export class InMemoryUserRepository {
   private users: User[] = [];

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Address } from './entities/adress.entity';
 import { AddressesResolver } from './resolvers/address-resolver';
 import { AddressesService } from './services/addresses.service';
-import { User } from '../auth/entities/user.entity';
+import { User } from '../auth/infra/entities/user.entity';
+import { Address } from './infra/entities/adress.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Address, User])],

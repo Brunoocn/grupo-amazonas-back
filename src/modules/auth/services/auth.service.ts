@@ -7,10 +7,11 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
-import { User } from 'src/modules/auth/entities/user.entity';
+
 import { Repository } from 'typeorm';
-import { RegisterInput } from '../graphql/inputs/register.input';
-import { LoginInput } from '../graphql/inputs/login.input';
+import { LoginInput } from '../domain/inputs/login.input';
+import { RegisterInput } from '../domain/inputs/register.input';
+import { User } from '../infra/entities/user.entity';
 
 @Injectable()
 export class AuthService {

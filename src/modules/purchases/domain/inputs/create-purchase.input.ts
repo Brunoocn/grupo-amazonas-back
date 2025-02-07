@@ -5,8 +5,8 @@ export class CreatePurchaseInput {
   @Field(() => Float)
   totalAmount: number;
 
-  @Field()
-  purchaseDate: string;
+  @Field(() => Date)
+  purchaseDate: Date;
 
   @Field(() => Int)
   userId: number;

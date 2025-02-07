@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { Address } from 'src/modules/addresses/entities/adress.entity';
-import { Purchase } from 'src/modules/purchases/entities/purchase.entity';
+import { Address } from 'src/modules/addresses/infra/entities/adress.entity';
+import { Purchase } from 'src/modules/purchases/infra/entities/purchase.entity';
 
 @Entity()
 export class User {
@@ -39,7 +39,7 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   password: string;
 
-  private tempPassword?: string; // Store original password before updates
+  private tempPassword?: string;
 
   @BeforeInsert()
   @BeforeUpdate()

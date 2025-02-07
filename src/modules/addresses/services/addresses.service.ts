@@ -6,10 +6,10 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Address } from '../entities/adress.entity';
-import { User } from 'src/modules/auth/entities/user.entity';
-import { CreateAddressInput } from '../graphql/inputs/create-address.input';
-import { UpdateAddressInput } from '../graphql/inputs/update-address.input';
+import { Address } from '../infra/entities/adress.entity';
+import { User } from 'src/modules/auth/infra/entities/user.entity';
+import { CreateAddressInput } from '../domain/inputs/create-address.input';
+import { UpdateAddressInput } from '../domain/inputs/update-address.input';
 
 @Injectable()
 export class AddressesService {

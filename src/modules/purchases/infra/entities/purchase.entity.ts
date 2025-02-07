@@ -1,3 +1,4 @@
+import { User } from 'src/modules/auth/infra/entities/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,14 +7,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from 'src/modules/auth/entities/user.entity';
 
 @Entity()
 export class Purchase {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 }) // Explicitly defining decimal type
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   totalAmount: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

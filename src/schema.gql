@@ -27,7 +27,7 @@ input CreateAddressInput {
 }
 
 input CreatePurchaseInput {
-  purchaseDate: String!
+  purchaseDate: DateTime!
   totalAmount: Float!
   userId: Int!
 }
@@ -91,7 +91,7 @@ input UpdateAddressInput {
 
 input UpdatePurchaseInput {
   id: Int!
-  purchaseDate: String
+  purchaseDate: DateTime
   totalAmount: Float
   userId: Int
 }

@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Purchase } from '../entities/purchase.entity';
+
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from 'src/modules/auth/entities/user.entity';
-
-import { CreatePurchaseInput } from '../graphql/inputs/create-purchase.input';
-import { UpdatePurchaseInput } from '../graphql/inputs/update-purchase.input';
+import { CreatePurchaseInput } from '../domain/inputs/create-purchase.input';
+import { UpdatePurchaseInput } from '../domain/inputs/update-purchase.input';
+import { User } from 'src/modules/auth/infra/entities/user.entity';
+import { Purchase } from '../infra/entities/purchase.entity';
 
 @Injectable()
 export class PurchasesService {
@@ -22,10 +22,16 @@ export class PurchasesService {
   }
 
   async findOne(id: number): Promise<Purchase> {
-    return await this.purchaseRepository.findOne({
+    const purchase = await this.purchaseRepository.findOne({
       where: { id },
       relations: ['user'],
     });
+
+    if (!purchase) {
+      throw new NotFoundException(`Purchase with ID ${id} not found`);
+    }
+
+    return purchase;
   }
 
   async create(input: CreatePurchaseInput): Promise<Purchase> {
@@ -41,11 +47,13 @@ export class PurchasesService {
     return this.purchaseRepository.save(purchase);
   }
 
-  async update(id: number, input: UpdatePurchaseInput): Promise<Purchase> {
-    const purchase = await this.purchaseRepository.findOne({ where: { id } });
+  async update(input: UpdatePurchaseInput): Promise<Purchase> {
+    const purchase = await this.purchaseRepository.findOne({
+      where: { id: input.id },
+    });
 
     if (!purchase) {
-      throw new NotFoundException(`Purchase with ID ${id} not found`);
+      throw new NotFoundException(`Purchase with ID ${input.id} not found`);
     }
 
     Object.assign(purchase, input);
@@ -53,13 +61,16 @@ export class PurchasesService {
   }
 
   async delete(id: number): Promise<{ success: boolean; message: string }> {
-    const purchase = await this.purchaseRepository.findOne({ where: { id } });
+    const purchase = await this.purchaseRepository.findOne({
+      where: { id },
+    });
 
     if (!purchase) {
       throw new NotFoundException(`Purchase with ID ${id} not found`);
     }
 
-    await this.purchaseRepository.delete({ id });
+    await this.purchaseRepository.delete(id);
+
     return {
       success: true,
       message: `Purchase with ID ${id} has been deleted`,
