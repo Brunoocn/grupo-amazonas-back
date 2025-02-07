@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthResolver } from './resolvers/auth-resolver';
 import { JwtService } from '@nestjs/jwt';
-import { User } from './infra/entities/user.entity';
+import { User } from './domain/entities/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],

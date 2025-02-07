@@ -7,9 +7,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Address } from '../infra/entities/adress.entity';
-import { User } from 'src/modules/auth/infra/entities/user.entity';
+
 import { CreateAddressInput } from '../domain/inputs/create-address.input';
 import { UpdateAddressInput } from '../domain/inputs/update-address.input';
+import { User } from 'src/modules/auth/domain/entities/user.entity';
 
 @Injectable()
 export class AddressesService {

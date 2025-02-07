@@ -9,9 +9,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
 
 import { Repository } from 'typeorm';
-import { LoginInput } from '../domain/inputs/login.input';
-import { RegisterInput } from '../domain/inputs/register.input';
-import { User } from '../infra/entities/user.entity';
+import { User } from '../domain/entities/user.entity';
+import { LoginInput } from '../infra/inputs/login.input';
+import { RegisterInput } from '../infra/inputs/register.input';
 
 @Injectable()
 export class AuthService {

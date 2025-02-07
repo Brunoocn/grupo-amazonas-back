@@ -4,8 +4,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreatePurchaseInput } from '../domain/inputs/create-purchase.input';
 import { UpdatePurchaseInput } from '../domain/inputs/update-purchase.input';
-import { User } from 'src/modules/auth/infra/entities/user.entity';
+
 import { Purchase } from '../infra/entities/purchase.entity';
+import { User } from 'src/modules/auth/domain/entities/user.entity';
 
 @Injectable()
 export class PurchasesService {
