@@ -15,12 +15,12 @@ import { JwtStrategy } from './common/guards/jwt-guard/jwt.strategy';
 import { JwtGuard } from './common/guards/jwt-guard/jwt.guard';
 import { AuthModule } from './modules/auth/auth.module';
 
-import { Address } from './modules/addresses/infra/entities/adress.entity';
 import { Purchase } from './modules/purchases/infra/entities/purchase.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { PluralNamingStrategy } from './config/plural-naming.strategy';
 import { User } from './modules/auth/domain/entities/user.entity';
+import { Address } from './modules/addresses/domain/entities/adress.entity';
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
 // test/repositories/in-memory-address.repository.ts
 
-import { Address } from 'src/modules/addresses/infra/entities/adress.entity';
+import { Address } from 'src/modules/addresses/domain/entities/adress.entity';
 import { User } from 'src/modules/auth/domain/entities/user.entity';
 
 export class InMemoryAddressRepository {
