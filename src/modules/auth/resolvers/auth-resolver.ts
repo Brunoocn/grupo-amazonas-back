@@ -23,6 +23,7 @@ export class AuthResolver {
   @SkipAuth()
   @Mutation(() => User)
   async register(@Args('input') input: RegisterInput): Promise<User> {
+    console.log(input, 'register');
     return this.authService.register(input);
   }
 }

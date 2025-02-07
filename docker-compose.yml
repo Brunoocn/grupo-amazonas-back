@@ -1,11 +1,10 @@
 version: '3.9'
 
-name: grupo-amazonas-case2
+name: grupo-amazonas-case
 
 services:
   db:
     image: postgres:latest
-    container_name: grupo-amazonas-db
     restart: always
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -32,15 +31,7 @@ services:
         condition: service_healthy
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_NAME=postgres
-    command: [ "/app/wait-for-it.sh", "npm", "run", "start:prod" ]
+    command: ["npm", "run", "start:prod" ]
     networks:
       - app-network
 

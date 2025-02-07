@@ -1,33 +1,24 @@
-# Use a versão mais recente do Node.js
-FROM node:20-alpine
+FROM node:22-alpine
 
-# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copie o package.json e o package-lock.json (ou yarn.lock) para instalar as dependências primeiro
-COPY package*.json ./
-
-# Limpe o cache do npm
-RUN npm cache clean --force
-
-# Instale as dependências da aplicação
-RUN npm install --legacy-peer-deps
-
-# Copie todo o código da aplicação para dentro do contêiner
 COPY . .
 
-# Copie o arquivo .env
-COPY .env .env
+RUN npm cache clean --force
 
-# Copie o script de espera pelo banco
+RUN npm install --legacy-peer-deps
+
+COPY .env.prod .env
+
 COPY wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 
-# Compile o código TypeScript
 RUN npm run build
 
-# Exponha a porta que o NestJS vai rodar
+RUN rm -rf node_modules
+
+RUN npm install --legacy-peer-deps
+
 EXPOSE 3000
 
-# Comando para iniciar a aplicação
-CMD ["/app/wait-for-it.sh", "npm", "run", "start:prod"]
+CMD ["npm", "run", "start:prod"]
