@@ -20,6 +20,7 @@ import { Address } from './modules/addresses/infra/entities/adress.entity';
 import { Purchase } from './modules/purchases/infra/entities/purchase.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { PluralNamingStrategy } from './config/plural-naming.strategy';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.PG_DATABASE_NAME,
       entities: [User, Address, Purchase],
       synchronize: true,
+      namingStrategy: new PluralNamingStrategy(),
     }),
   ],
   controllers: [],

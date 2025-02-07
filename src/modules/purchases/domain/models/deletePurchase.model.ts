@@ -6,5 +6,5 @@ export class DeletePurchase {
   message: string;
 
   @Field()
-  sucess: boolean;
+  success: boolean;
 }

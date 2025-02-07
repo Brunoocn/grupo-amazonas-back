@@ -39,12 +39,12 @@ scalar DateTime
 
 type DeleteAdress {
   message: String!
-  sucess: Boolean!
+  success: Boolean!
 }
 
 type DeletePurchase {
   message: String!
-  sucess: Boolean!
+  success: Boolean!
 }
 
 input LoginInput {

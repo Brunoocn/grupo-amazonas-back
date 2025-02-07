@@ -63,6 +63,12 @@ export class AuthService {
       where: { email: registerUserInput.email },
     });
 
+    if (
+      !this.verifyPasswordIsMoreThanSixCharacters(registerUserInput.password)
+    ) {
+      throw new BadRequestException('Password must be at least 6 characters');
+    }
+
     if (userExists) {
       throw new BadRequestException(
         `User with email ${registerUserInput.email} already exists`,
@@ -71,5 +77,9 @@ export class AuthService {
 
     const newUser = this.usersRepository.create(registerUserInput);
     return this.usersRepository.save(newUser);
+  }
+
+  verifyPasswordIsMoreThanSixCharacters(password: string): boolean {
+    return password.length > 6;
   }
 }

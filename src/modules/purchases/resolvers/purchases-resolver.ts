@@ -32,7 +32,7 @@ export class PurchasesResolver {
   }
 
   @Mutation(() => DeletePurchase)
-  deletePurchase(@Args('id', { type: () => Number }) id: number) {
+  deletePurchase(@Args('id') id: number) {
     return this.purchasesService.delete(id);
   }
 }

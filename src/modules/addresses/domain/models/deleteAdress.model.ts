@@ -6,5 +6,5 @@ export class DeleteAdress {
   message: string;
 
   @Field()
-  sucess: boolean;
+  success: boolean;
 }
