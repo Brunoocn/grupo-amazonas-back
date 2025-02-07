@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 
 import { AddressesService } from '../services/addresses.service';
-import { Address } from '../domain/models/adress.model';
-import { CreateAddressInput } from '../domain/inputs/create-address.input';
-import { UpdateAddressInput } from '../domain/inputs/update-address.input';
-import { DeleteAdress } from '../domain/models/deleteAdress.model';
+
+import { Address } from '../infra/models/adress.model';
+import { UpdateAddressInput } from '../infra/inputs/update-address.input';
+import { CreateAddressInput } from '../infra/inputs/create-address.input';
+import { DeleteAdress } from '../infra/models/deleteAdress.model';
 
 @Resolver(() => Address)
 export class AddressesResolver {

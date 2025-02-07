@@ -2,10 +2,10 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from '../services/auth.service';
 
 import { SkipAuth } from 'src/common/decorators/skip-auth.decorator';
-import { AuthResponse } from '../domain/models/register.model';
-import { RegisterInput } from '../domain/inputs/register.input';
-import { User } from '../domain/models/user.model';
-import { LoginInput } from '../domain/inputs/login.input';
+import { AuthResponse } from '../infra/models/register.model';
+import { LoginInput } from '../infra/inputs/login.input';
+import { User } from '../infra/models/user.model';
+import { RegisterInput } from '../infra/inputs/register.input';
 
 @Resolver()
 export class AuthResolver {
@@ -14,10 +14,7 @@ export class AuthResolver {
   @SkipAuth()
   @Mutation(() => AuthResponse)
   async login(@Args('input') input: LoginInput) {
-    return this.authService.login({
-      email: input.email,
-      password: input.password,
-    });
+    return this.authService.login(input);
   }
 
   @SkipAuth()

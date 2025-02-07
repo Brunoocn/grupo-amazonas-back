@@ -2,10 +2,10 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 
 import { PurchasesService } from '../services/purchases.service';
 
-import { Purchase } from '../domain/models/purchase.model';
-import { CreatePurchaseInput } from '../domain/inputs/create-purchase.input';
-import { UpdatePurchaseInput } from '../domain/inputs/update-purchase.input';
-import { DeletePurchase } from '../domain/models/deletePurchase.model';
+import { Purchase } from '../infra/models/purchase.model';
+import { CreatePurchaseInput } from '../infra/inputs/create-purchase.input';
+import { UpdatePurchaseInput } from '../infra/inputs/update-purchase.input';
+import { DeletePurchase } from '../infra/models/deletePurchase.model';
 
 @Resolver(() => Purchase)
 export class PurchasesResolver {

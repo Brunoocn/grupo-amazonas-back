@@ -9,8 +9,8 @@ import {
 import * as bcrypt from 'bcrypt';
 import { InMemoryUserRepository } from 'src/test/repositories/auth-in-memory.repository';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { RegisterInput } from '../domain/inputs/register.input';
-import { LoginInput } from '../domain/inputs/login.input';
+import { RegisterInput } from '../infra/inputs/register.input';
+import { LoginInput } from '../infra/inputs/login.input';
 
 describe('AuthService', () => {
   let authService: AuthService;

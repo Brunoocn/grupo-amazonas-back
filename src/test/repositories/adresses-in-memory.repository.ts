@@ -1,14 +1,14 @@
 // test/repositories/in-memory-address.repository.ts
 
-import { Address } from 'src/modules/addresses/infra/entities/adress.entity';
-import { User } from 'src/modules/auth/infra/entities/user.entity';
+import { Address } from 'src/modules/addresses/domain/entities/adress.entity';
+import { User } from 'src/modules/auth/domain/entities/user.entity';
 
 export class InMemoryAddressRepository {
   private addresses: Address[] = [];
   private users: User[] = [];
   private addressId = 1;
 
-  async find(options?: any): Promise<Address[]> {
+  async find(): Promise<Address[]> {
     return this.addresses;
   }
 

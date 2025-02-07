@@ -10,8 +10,9 @@ import {
 } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
-import { Address } from 'src/modules/addresses/infra/entities/adress.entity';
-import { Purchase } from 'src/modules/purchases/infra/entities/purchase.entity';
+
+import { Address } from 'src/modules/addresses/domain/entities/adress.entity';
+import { Purchase } from 'src/modules/purchases/domain/entities/purchase.entity';
 
 @Entity()
 export class User {
