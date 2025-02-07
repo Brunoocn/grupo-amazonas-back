@@ -11,7 +11,7 @@ Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
 $ git clone https://github.com/Brunoocn/grupo-amazonas-back.git
-$ cd viagens-promo-case-back
+$ cd grupo-amazonas-back
 ```
 
 Para iniciá-lo, siga os passos abaixo:
