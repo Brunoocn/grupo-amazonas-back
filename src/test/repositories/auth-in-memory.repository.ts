@@ -20,8 +20,10 @@ export class InMemoryUserRepository {
     return user;
   }
 
-  async create(user: Partial<User>): Promise<User> {
-    return user as User;
+  async create(user: User): Promise<User> {
+    this.users.push(user);
+
+    return user;
   }
 
   async clear() {

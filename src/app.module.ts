@@ -19,17 +19,21 @@ import { User } from './modules/auth/infra/entities/user.entity';
 import { Address } from './modules/addresses/infra/entities/adress.entity';
 import { Purchase } from './modules/purchases/infra/entities/purchase.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
     JwtModule.register({
-      secret: 'SECRET_KEY',
-      signOptions: { expiresIn: '1d' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN || '1d' },
     }),
     AdressesModule,
     PurchasesModule,

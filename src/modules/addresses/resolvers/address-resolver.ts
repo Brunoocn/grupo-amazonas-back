@@ -21,7 +21,6 @@ export class AddressesResolver {
 
   @Mutation(() => Address)
   createAddress(@Args('input') input: CreateAddressInput) {
-    console.log(input, 'input');
     return this.addressesService.create(input);
   }
 

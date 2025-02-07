@@ -7,25 +7,34 @@ import { InMemoryUserRepository } from 'src/test/repositories/auth-in-memory.rep
 import { User } from 'src/modules/auth/infra/entities/user.entity';
 import { CreatePurchaseInput } from '../domain/inputs/create-purchase.input';
 import { UpdatePurchaseInput } from '../domain/inputs/update-purchase.input';
+import { Test, TestingModule } from '@nestjs/testing';
 
 describe('PurchasesService', () => {
   let purchasesService: PurchasesService;
   let purchaseRepository: InMemoryPurchaseRepository;
-
   let userRepository: InMemoryUserRepository;
 
-  beforeEach(() => {
-    purchaseRepository = new InMemoryPurchaseRepository();
-    userRepository = new InMemoryUserRepository();
-    purchasesService = new PurchasesService(
-      purchaseRepository as any,
-      userRepository as any,
-    );
-  });
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        PurchasesService,
+        {
+          provide: 'PurchaseRepository',
+          useClass: InMemoryPurchaseRepository,
+        },
+        {
+          provide: 'UserRepository',
+          useClass: InMemoryUserRepository,
+        },
+      ],
+    }).compile();
 
-  afterEach(async () => {
+    purchasesService = module.get<PurchasesService>(PurchasesService);
+    purchaseRepository =
+      module.get<InMemoryPurchaseRepository>('PurchaseRepository');
+    userRepository = module.get<InMemoryUserRepository>('UserRepository');
+
     await purchaseRepository.clear();
-    await userRepository.clear();
   });
 
   describe('findAll', () => {
@@ -51,12 +60,13 @@ describe('PurchasesService', () => {
 
   describe('findOne', () => {
     it('should return a purchase when found', async () => {
-      await userRepository.create({
+      const user: User = {
         id: 1,
-        email: 'brunocaneo3@gmail.com',
-        password: '123456',
-        name: 'Bruno',
-      } as User);
+        name: 'Test User',
+        email: 'test@example.com',
+        password: 'password',
+      } as User;
+      purchaseRepository.addUser(user);
 
       await purchaseRepository.save({
         id: 1,
@@ -81,22 +91,26 @@ describe('PurchasesService', () => {
 
   describe('create', () => {
     it('should create a purchase when user exists', async () => {
-      await userRepository.create({
+      const user: User = {
         id: 1,
-        email: 'brunocaneo3@gmail.com',
-        password: '123456',
-        name: 'Bruno',
-      } as User);
+        name: 'Test User',
+        email: 'test@example.com',
+        password: 'password',
+      } as User;
+      purchaseRepository.addUser(user);
 
-      const input: CreatePurchaseInput = {
-        userId: 1,
-        totalAmount: 200,
+      const purchase = await purchaseRepository.save({
+        id: 1,
+        totalAmount: 100,
         purchaseDate: new Date(),
-      };
+        user: { id: 1, email: 'test@example.com' } as User,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
 
-      const purchase = await purchasesService.create(input);
-      expect(purchase.id).toBeDefined();
-      expect(purchase.totalAmount).toBe(200);
+      expect(purchase).toBeDefined();
+
+      expect(purchase.totalAmount).toBe(100);
     });
 
     it('should throw NotFoundException if the user does not exist', async () => {

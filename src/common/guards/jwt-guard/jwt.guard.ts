@@ -7,49 +7,34 @@ import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { IS_PUBLIC_KEY } from 'src/common/decorators/skip-auth.decorator';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {
-  // constructor(private reflector: Reflector) {
-  //   super();
-  // }
-
-  getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req;
+  constructor(private reflector: Reflector) {
+    super();
   }
-  // canActivate(context: ExecutionContext) {
-  //   const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-  //     context.getHandler(),
-  //     context.getClass(),
-  //   ]);
 
-  //   if (isPublic) {
-  //     return true;
-  //   }
+  getRequest(context: ExecutionContext): Request {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext()?.req || context.switchToHttp().getRequest();
+  }
 
-  //   const ctx = GqlExecutionContext.create(context);
-  //   const request = ctx.getContext().req;
-  //   console.log(request, 'request');
-  //   if (!request) {
-  //     throw new UnauthorizedException('Request object not found in context.');
-  //   }
+  canActivate(context: ExecutionContext) {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
-  //   console.log(typeof ctx, 'type');
-  //   const teste = ctx.getContext();
-  //   console.log(typeof teste, 'teste type');
-  //   return super.canActivate(request);
-  // }
+    if (isPublic) {
+      return true;
+    }
 
-  // handleRequest(err, user) {
-  //   if (err) {
-  //     throw new UnauthorizedException('Unauthorized');
-  //   }
+    const request = this.getRequest(context);
+    if (!request) {
+      throw new UnauthorizedException('Request object not found in context.');
+    }
 
-  //   if (!user) {
-  //     console.log('caiu aqui');
-  //     return;
-  //   }
-  //   return user;
-  // }
+    return super.canActivate(context);
+  }
 }

@@ -22,21 +22,21 @@ export class AuthService {
   ) {}
 
   async validateUser(loginUserInput: LoginInput) {
-    console.log(loginUserInput.email);
     const user = await this.usersRepository.findOne({
       where: { email: loginUserInput.email },
     });
 
     if (!user) {
-      throw new NotFoundException('Email e/ou senha inválidos');
+      throw new NotFoundException('User not found');
     }
 
     const isPasswordValid = await compare(
       loginUserInput.password,
       user.password,
     );
+
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Email e/ou senha inválidos');
+      throw new UnauthorizedException('Email and/or password incorrect');
     }
 
     return user;
@@ -45,15 +45,16 @@ export class AuthService {
   async login(loginUserInput: LoginInput) {
     const user = await this.validateUser(loginUserInput);
 
-    const payload = { id: user.id, name: user.name, email: user.email };
-    const token = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET || 'default_secret',
+    const userFormatted = { id: user.id, name: user.name, email: user.email };
+
+    const token = this.jwtService.sign(userFormatted, {
+      secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     });
 
     return {
       token,
-      user: payload,
+      user: userFormatted,
     };
   }
 
