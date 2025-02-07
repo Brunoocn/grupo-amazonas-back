@@ -1,0 +1,112 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Address {
+  cep: String!
+  city: String!
+  createdAt: DateTime!
+  id: ID!
+  number: String!
+  state: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+input CreateAddressInput {
+  cep: String!
+  city: String!
+  number: String!
+  state: String!
+  userId: Int!
+}
+
+input CreatePurchaseInput {
+  purchaseDate: DateTime!
+  totalAmount: Float!
+  userId: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteAdress {
+  message: String!
+  success: Boolean!
+}
+
+type DeletePurchase {
+  message: String!
+  success: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createAddress(input: CreateAddressInput!): Address!
+  createPurchase(input: CreatePurchaseInput!): Purchase!
+  deleteAddress(id: Float!): DeleteAdress!
+  deletePurchase(id: Float!): DeletePurchase!
+  login(input: LoginInput!): AuthResponse!
+  register(input: RegisterInput!): User!
+  updateAddress(input: UpdateAddressInput!): Address!
+  updatePurchase(input: UpdatePurchaseInput!): Purchase!
+}
+
+type Purchase {
+  createdAt: DateTime!
+  id: ID!
+  purchaseDate: DateTime!
+  totalAmount: Float!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type Query {
+  address(id: Int!): Address!
+  addresses: [Address!]!
+  purchase(id: Float!): Purchase!
+  purchases: [Purchase!]!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input UpdateAddressInput {
+  cep: String
+  city: String
+  id: Int!
+  number: String
+  state: String
+  userId: Int
+}
+
+input UpdatePurchaseInput {
+  id: Int!
+  purchaseDate: DateTime
+  totalAmount: Float
+  userId: Int
+}
+
+type User {
+  addresses: [Address!]
+  createdAt: DateTime!
+  email: String!
+  id: ID!
+  name: String!
+  purchases: [Purchase!]
+  updatedAt: DateTime!
+}
