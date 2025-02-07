@@ -4,6 +4,7 @@ import { AddressesService } from '../services/addresses.service';
 import { Address } from '../domain/models/adress.model';
 import { CreateAddressInput } from '../domain/inputs/create-address.input';
 import { UpdateAddressInput } from '../domain/inputs/update-address.input';
+import { DeleteAdress } from '../domain/models/deleteAdress.model';
 
 @Resolver(() => Address)
 export class AddressesResolver {
@@ -26,10 +27,10 @@ export class AddressesResolver {
 
   @Mutation(() => Address)
   updateAddress(@Args('input') input: UpdateAddressInput) {
-    return this.addressesService.update(input.id, input);
+    return this.addressesService.update(input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => DeleteAdress)
   deleteAddress(@Args('id', { type: () => Number }) id: number) {
     return this.addressesService.delete(id);
   }

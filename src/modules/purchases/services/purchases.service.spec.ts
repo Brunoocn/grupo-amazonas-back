@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { PurchasesService } from '../services/purchases.service';
 import { InMemoryPurchaseRepository } from 'src/test/repositories/purchases-in-memory.repository';
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryUserRepository } from 'src/test/repositories/auth-in-memory.repository';
 import { User } from 'src/modules/auth/infra/entities/user.entity';
 import { CreatePurchaseInput } from '../domain/inputs/create-purchase.input';
@@ -12,7 +12,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 describe('PurchasesService', () => {
   let purchasesService: PurchasesService;
   let purchaseRepository: InMemoryPurchaseRepository;
-  let userRepository: InMemoryUserRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +31,6 @@ describe('PurchasesService', () => {
     purchasesService = module.get<PurchasesService>(PurchasesService);
     purchaseRepository =
       module.get<InMemoryPurchaseRepository>('PurchaseRepository');
-    userRepository = module.get<InMemoryUserRepository>('UserRepository');
 
     await purchaseRepository.clear();
   });

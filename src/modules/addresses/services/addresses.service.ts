@@ -26,10 +26,16 @@ export class AddressesService {
   }
 
   async findOne(id: number): Promise<Address> {
-    return this.addressRepository.findOne({
+    const adress = await this.addressRepository.findOne({
       where: { id },
       relations: ['user'],
     });
+
+    if (!adress) {
+      throw new NotFoundException(`Address with ID ${id} not found`);
+    }
+
+    return adress;
   }
 
   async create(input: CreateAddressInput): Promise<Address> {
@@ -52,14 +58,13 @@ export class AddressesService {
     return this.addressRepository.save(address);
   }
 
-  async update(id: number, input: UpdateAddressInput): Promise<Address> {
+  async update(input: UpdateAddressInput): Promise<Address> {
     const address = await this.addressRepository.findOne({
-      where: { id },
-      relations: ['user'],
+      where: { id: input.id },
     });
 
     if (!address) {
-      throw new NotFoundException(`Address with ID ${id} not found`);
+      throw new NotFoundException(`Address with ID ${input.userId} not found`);
     }
 
     if (input.userId && input.cep) {
